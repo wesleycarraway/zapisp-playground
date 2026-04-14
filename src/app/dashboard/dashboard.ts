@@ -1,16 +1,23 @@
 import { Component } from '@angular/core';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
-// Importe apenas os ícones que você vai usar:
+
 import { heroFunnel } from '@ng-icons/heroicons/outline';
+import { heroAdjustmentsHorizontalMicro } from '@ng-icons/heroicons/micro';
+
+import { Button } from "../button/button";
+import { Filter } from '../filter/filter';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [NgIconComponent],
-  // Proveja os ícones para este componente:
-  viewProviders: [provideIcons({ heroFunnel })],
+  imports: [NgIconComponent, Button, Filter],
+  viewProviders: [provideIcons({ heroFunnel, heroAdjustmentsHorizontalMicro })],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
 export class Dashboard {
+  isFilterModalOpen: boolean = false;
 
+  toggleFilterModal() {
+    this.isFilterModalOpen = !this.isFilterModalOpen;
+  }
 }

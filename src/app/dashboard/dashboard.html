@@ -1,10 +1,9 @@
-<p>dashboard works!</p>
-<nav class="flex gap-4 p-4 bg-gray-100">
+<!--<nav class="flex gap-4 p-4 bg-gray-100">
     <a routerLink="/home" class="flex items-center gap-2 text-gray-700 hover:text-blue-500">
     </a>
-</nav>
+</nav>-->
 
-<div class="w-fit flex flex-col gap-6 p-6 border border-gray-200 rounded-lg">
+<div class="w-fit flex flex-col gap-6 p-6 border bg-slate-50 border-gray-200 rounded-lg">
     <div class="flex flex-row gap-3 items-center justify-center">
         <div class="grid place-items-center text-(--color-icon-primary) size-9 rounded-md bg-blue-100">
             <ng-icon name="heroFunnel" class="text-2xl"></ng-icon>
@@ -17,4 +16,22 @@
     </div>
 
     <p class="text-xs font-medium text-gray-950">Contatos filtrados:</p>
+
+    <div class="relative inline-block">
+        <app-button variant="secondary" (click)="toggleFilterModal()">
+            <ng-icon name="heroAdjustmentsHorizontalMicro" class="text-base"></ng-icon>
+
+            Filtros
+
+            <div
+                class="flex flex-row items-center justify-center text-xs text-(--color-icon-primary) min-w-5 py-0.5 px-1.5 rounded-full bg-zinc-100">
+                2
+            </div>
+        </app-button>
+
+        @if (isFilterModalOpen) {
+        <app-filter></app-filter>
+        }
+    </div>
+
 </div>
