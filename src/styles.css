@@ -1,2 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+@theme inline {
+    --color-icon-primary: var(--color-blue-600);
+}
+
+@theme {
+    --font-sans: 'Inter', sans-serif;
+    --font-sans--font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+body {
+    @apply font-sans;
+}
+
+@layer components {
+    h1 {
+        font-size: var(--text-4xl);
+        font-weight: var(--font-weight-semibold);
+        color: var(--color-gray-950);
+    }
+
+    h4 {
+        font-size: var(--text-base);
+        font-weight: var(--font-weight-semibold);
+        color: var(--color-gray-950);
+    }
+}
