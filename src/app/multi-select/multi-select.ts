@@ -1,12 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { heroChevronDownMicro } from '@ng-icons/heroicons/micro';
 import { heroCheck } from '@ng-icons/heroicons/outline';
-
-interface SelectOption {
-  value: string | number;
-  label: string;
-}
 
 @Component({
   selector: 'app-multi-select',
@@ -19,32 +14,36 @@ interface SelectOption {
 export class MultiSelect {
   @Input() label?: string;
   @Input() placeholder: string = 'Selecionar';
-  @Input() options: SelectOption[] = [];
+  @Input() options: string[] = [];
   @Input() width: string = '100%';
+
+  @Output() valuesChanged = new EventEmitter<string[]>();
 
   isOpen: boolean = false;
 
-  selectedValues: (string | number)[] = [];
+  selectedValues: string[] = [];
 
   toggleDropdown() {
     this.isOpen = !this.isOpen;
   }
 
   // Lógica de marcar/desmarcar
-  toggleOption(option: SelectOption) {
-    const index = this.selectedValues.indexOf(option.value);
+  toggleOption(option: string) {
+    const index = this.selectedValues.indexOf(option);
 
     if (index > -1) {
       // Se já estava na lista, a gente remove (desmarca)
       this.selectedValues.splice(index, 1);
     } else {
       // Se não estava, a gente adiciona (marca)
-      this.selectedValues.push(option.value);
+      this.selectedValues.push(option);
     }
+
+    this.valuesChanged.emit(this.selectedValues);
   }
 
-  isSelected(value: string | number): boolean {
-    return this.selectedValues.includes(value);
+  isSelected(option: string): boolean {
+    return this.selectedValues.includes(option);
   }
 
   get selectedCount(): number {
@@ -55,12 +54,6 @@ export class MultiSelect {
   get displayText(): string {
     if (this.selectedCount === 0) return this.placeholder;
 
-    // Pega as labels correspondentes aos valores selecionados e junta com vírgula
-    const labels = this.selectedValues.map(val => {
-      const option = this.options.find(opt => opt.value === val);
-      return option ? option.label : '';
-    });
-
-    return labels.join(', ');
+    return this.selectedValues.join(', ');
   }
 }

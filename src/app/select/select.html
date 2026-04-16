@@ -37,9 +37,9 @@
     <div class="relative w-full">
 
         <button type="button" [id]="id" (click)="toggleDropdown()" class=" flex items-center justify-between w-full pl-3 pr-2 h-9 border border-gray-300 hover:border-gray-400 rounded-md text-sm bg-slate-50 cursor-pointer
-            focus:outline-none focus:border-gray-400" [class.text-gray-950]="selectedLabel"
-            [class.text-zinc-400]="!selectedLabel">
-            <span class="truncate">{{ selectedLabel || placeholder }}</span>
+            focus:outline-none focus:border-gray-400" [class.text-gray-950]="selectedValue"
+            [class.text-zinc-400]="!selectedValue">
+            <span class="truncate">{{ selectedValue || placeholder }}</span>
 
             <ng-icon name="heroChevronDownMicro" size="1rem" class="text-zinc-400 transition-transform duration-200"
                 [class.rotate-180]="isOpen">
@@ -52,16 +52,15 @@
         <div
             class="absolute p-1 top-full left-0 w-full mt-2.5 bg-slate-50 border border-gray-300 rounded-md shadow-lg z-50 max-h-60 overflow-auto">
 
-            @for (option of options; track option.value) {
+            @for (option of options; track option) {
             <button type="button" (click)="selectOption(option)"
                 class="w-full flex items-center justify-between px-3 h-9 text-sm rounded-sm cursor-pointer text-gray-950 hover:bg-zinc-100 hover:text-blue-600 transition-colors"
-                [class.text-blue-600]="option.label === selectedLabel"
-                [class.font-semibold]="option.label === selectedLabel"
-                [class.text-gray-950]="option.label !== selectedLabel">
+                [class.text-blue-600]="option === selectedValue" [class.font-semibold]="option === selectedValue"
+                [class.text-gray-950]="option !== selectedValue">
 
-                <span class="truncate">{{ option.label }}</span>
+                <span class="truncate">{{ option }}</span>
 
-                @if (option.label === selectedLabel) {
+                @if (option === selectedValue) {
                 <ng-icon name="heroCheck" class="text-xl"></ng-icon>
                 }
 

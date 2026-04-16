@@ -37,14 +37,14 @@
         <div
             class="absolute p-1 top-full left-0 w-full mt-2.5 bg-slate-50 border border-gray-300 rounded-md shadow-lg z-50 max-h-60 overflow-auto">
 
-            @for (option of options; track option.value) {
+            @for (option of options; track option) {
             <button type="button" (click)="toggleOption(option)"
                 class="w-full flex items-center justify-between px-3 h-9 text-sm rounded-sm cursor-pointer text-gray-950 hover:bg-zinc-100 hover:text-blue-600 transition-colors"
-                [class.text-blue-600]="isSelected(option.value)" [class.text-gray-950]="!isSelected(option.value)"
-                [class.font-semibold]="isSelected(option.value)">
-                <span class="truncate">{{ option.label }}</span>
+                [class.text-blue-600]="isSelected(option)" [class.text-gray-950]="!isSelected(option)"
+                [class.font-semibold]="isSelected(option)">
+                <span class="truncate">{{ option }}</span>
 
-                @if (isSelected(option.value)) {
+                @if (isSelected(option)) {
                 <ng-icon name="heroCheck" class="text-xl"></ng-icon>
                 }
             </button>

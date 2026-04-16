@@ -8,10 +8,12 @@
     <p class="text-sm text-gray-950 font-medium">Onde</p>
 
     <div class="flex flex-row items-center justify-center gap-2.5 p-2.5 bg-zinc-100 rounded-md">
-        <app-select placeholder="Selecionar" [options]="options" width="160px"></app-select>
+        <app-select placeholder="Selecionar" [options]="fieldsOptions" (valueChanged)="loadFieldOptions($event)"
+            width="160px"></app-select>
         <app-select [autoSelectValue]="true" [options]="isEqualOptions" width="100px"></app-select>
 
-        <app-multi-select [options]="options" width="160px"></app-multi-select>
+        <app-multi-select [options]="valuesOptions" (valuesChanged)="aplicarFiltroValores($event)"
+            width="160px"></app-multi-select>
 
         <button
             class="flex items-center justify-center size-9 rounded-full hover:bg-zinc-200 hover:text-red-400 cursor-pointer">
