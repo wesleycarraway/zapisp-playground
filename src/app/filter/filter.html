@@ -1,18 +1,38 @@
-<div class="absolute top-full left-0 mt-2.5 z-50 p-6 bg-slate-50 border border-gray-200 rounded-lg shadow-md">
+<div
+    class="flex flex-col gap-7 absolute top-full left-0 mt-2.5 z-50 p-6 bg-slate-50 border border-gray-200 rounded-lg shadow-lg">
     <div class="flex flex-row items-center justify-between">
         <h4>Filtros</h4>
         <p class="text-sm font-medium text-blue-600">Resultados</p>
     </div>
 
-    <ul>
+    <p class="text-sm text-gray-950 font-medium">Onde</p>
+
+    <div class="flex flex-row items-center justify-center gap-2.5 p-2.5 bg-zinc-100 rounded-md">
+        <app-select placeholder="Selecionar" [options]="options" width="160px"></app-select>
+        <app-select [autoSelectValue]="true" [options]="isEqualOptions" width="100px"></app-select>
+
+        <app-multi-select [options]="options" width="160px"></app-multi-select>
+
+        <button
+            class="flex items-center justify-center size-9 rounded-full hover:bg-zinc-200 hover:text-red-400 cursor-pointer">
+            <ng-icon name="heroTrashMini" class="text-xl text-gray-950"></ng-icon>
+        </button>
+    </div>
+
+    <button type="button" (click)="toggleOperator()"
+        class="flex flex-row items-center justify-center w-fit gap-2 border border-gray-300 bg-slate-50 text-sm text-blue-600 cursor-pointer hover:bg-zinc-100 hover:border-gray-400 font-semibold rounded-md px-3 h-9">
+        <span>{{ isAndOperator ? 'E' : 'OU' }}</span>
+
+        <ng-icon name="heroChevronDownMicro" size="1rem" class="transition-transform duration-200">
+        </ng-icon>
+    </button>
+
+
+
+    <!--<ul>
         <li>filtro 1</li>
         <li>filtro 2</li>
-    </ul>
+    </ul>-->
 
-    <app-inputc placeholder="you@example.com">
-    </app-inputc>
 
-    <br>
-
-    <app-select label="Teste" [options]="options"></app-select>
 </div>
