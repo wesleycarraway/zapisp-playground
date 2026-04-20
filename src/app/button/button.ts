@@ -21,7 +21,7 @@ export class Button {
     }
 
     if (this.variant === 'primary') {
-      return base + ' bg-blue-600 text-slate-50 cursor-pointer';
+      return base + ' bg-blue-600 hover:bg-blue-500 text-slate-50 cursor-pointer';
     }
 
     if (this.variant === 'secondary') {
