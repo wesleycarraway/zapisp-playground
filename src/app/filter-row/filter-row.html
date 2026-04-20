@@ -1,0 +1,18 @@
+<div class="flex flex-row items-center justify-center gap-2.5 p-2.5 bg-zinc-100 rounded-md">
+
+    <app-select placeholder="Selecionar" [options]="fieldOptions" (valueChanged)="onFieldChange($event)" width="160px">
+    </app-select>
+
+    <app-select [autoSelectValue]="true" [options]="operatorOptions" (valueChanged)="onOperatorChange($event)"
+        width="100px">
+    </app-select>
+
+    <app-multi-select [selectedValues]="selectedValues" [options]="valueOptions"
+        (valuesChanged)="onValuesChange($event)" width="160px">
+    </app-multi-select>
+
+    <button (click)="removeRow.emit()"
+        class="flex items-center justify-center size-9 rounded-full hover:bg-zinc-200 hover:text-red-400 cursor-pointer">
+        <ng-icon name="heroTrashMini" class="text-xl text-gray-950"></ng-icon>
+    </button>
+</div>

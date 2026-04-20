@@ -21,7 +21,7 @@ export class MultiSelect {
 
   isOpen: boolean = false;
 
-  selectedValues: string[] = [];
+  @Input() selectedValues: string[] = [];
 
   toggleDropdown() {
     this.isOpen = !this.isOpen;

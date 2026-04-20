@@ -7,19 +7,19 @@
 
     <p class="text-sm text-gray-950 font-medium">Onde</p>
 
-    <div class="flex flex-row items-center justify-center gap-2.5 p-2.5 bg-zinc-100 rounded-md">
-        <app-select placeholder="Selecionar" [options]="fieldsOptions" (valueChanged)="loadFieldOptions($event)"
-            width="160px"></app-select>
-        <app-select [autoSelectValue]="true" [options]="isEqualOptions" width="100px"></app-select>
+    <div class="flex flex-col gap-3">
+        @for (rule of activeRules; track rule.id) {
 
-        <app-multi-select [options]="valuesOptions" (valuesChanged)="aplicarFiltroValores($event)"
-            width="160px"></app-multi-select>
+        <app-filter-row (removeRow)="removeRule(rule.id)" (ruleChange)="updateRuleData(rule.id, $event)">
+        </app-filter-row>
 
-        <button
-            class="flex items-center justify-center size-9 rounded-full hover:bg-zinc-200 hover:text-red-400 cursor-pointer">
-            <ng-icon name="heroTrashMini" class="text-xl text-gray-950"></ng-icon>
-        </button>
+        }
     </div>
+
+    <button type="button" (click)="addNewRule()"
+        class="self-start text-sm text-blue-600 font-semibold hover:underline cursor-pointer">
+        + Adicionar filtro
+    </button>
 
     <button type="button" (click)="toggleOperator()"
         class="flex flex-row items-center justify-center w-fit gap-2 border border-gray-300 bg-slate-50 text-sm text-blue-600 cursor-pointer hover:bg-zinc-100 hover:border-gray-400 font-semibold rounded-md px-3 h-9">

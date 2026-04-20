@@ -1,58 +1,53 @@
 import { Component } from '@angular/core';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { heroTrashMini } from '@ng-icons/heroicons/mini';
 import { heroChevronDownMicro } from '@ng-icons/heroicons/micro';
-import { Inputc } from '../inputc/inputc';
-import { Select } from "../select/select";
-import { MultiSelect } from "../multi-select/multi-select";
-import { Button } from '../button/button';
-import { Database } from '../database';
+// IMPORTANTE: Importe o seu novo componente de linha aqui
+import { FilterRow } from '../filter-row/filter-row';
+
+interface FilterRule {
+  id: number;
+  data: any; // Aqui ficará guardado o field, operator e values
+}
 
 @Component({
   selector: 'app-filter',
   standalone: true,
-  imports: [NgIconComponent, Inputc, Select, MultiSelect, Button],
-  viewProviders: [provideIcons({ heroTrashMini, heroChevronDownMicro })],
+  imports: [NgIconComponent, FilterRow],
+  viewProviders: [provideIcons({ heroChevronDownMicro })],
   templateUrl: './filter.html',
-  styleUrl: './filter.css',
 })
 export class Filter {
-  fieldsOptions: string[] = ['Estado', 'Cidade', 'Plano'];
-  valuesOptions: string[] = [];
 
-  // Opções do Segundo Select (Operador Lógico)
-  isEqualOptions: string[] = ['É', 'Não é'];
+  // A lista de filtros na tela. Já começa com 1 filtro em branco por padrão.
+  activeRules: FilterRule[] = [
+    { id: 1, data: null }
+  ];
 
+  nextId: number = 2; // Usado para criar IDs únicos ao adicionar linhas
   isAndOperator: boolean = true;
-
-  constructor(private db: Database) { }
 
   toggleOperator() {
     this.isAndOperator = !this.isAndOperator;
   }
 
-  // ---> FUNÇÃO DO PRIMEIRO SELECT <---
-  loadFieldOptions(selectedField: string) {
+  // ADICIONA um novo filtro na tela
+  addNewRule() {
+    this.activeRules.push({ id: this.nextId++, data: null });
+  }
 
-    // A gente joga os dados do banco DIRETO na variável que o HTML lê!
-    if (selectedField === 'Estado') {
-      this.valuesOptions = this.db.estados;
+  // REMOVE um filtro da tela baseado no ID
+  removeRule(ruleId: number) {
+    this.activeRules = this.activeRules.filter(rule => rule.id !== ruleId);
+  }
 
-    } else if (selectedField === 'Cidade') {
-      this.valuesOptions = Object.values(this.db.cidadesPorEstado).flat();
-
-    } else if (selectedField === 'Plano') {
-      this.valuesOptions = this.db.planosDisponiveis;
-
+  // ATUALIZA os dados de uma linha específica quando o usuário clica nos selects
+  updateRuleData(ruleId: number, newData: any) {
+    const rule = this.activeRules.find(r => r.id === ruleId);
+    if (rule) {
+      rule.data = newData;
     }
+
+    // Apenas para você ver a mágica acontecendo no console
+    console.log('Todos os filtros ativos:', this.activeRules);
   }
-
-  // ---> FUNÇÃO DO MULTI-SELECT (A NOVA FUNÇÃO) <---
-  // Disparada quando você marca/desmarca as opções (ex: "RN", "SP")
-  aplicarFiltroValores(valoresSelecionados: string[]) {
-    console.log('O Multi-select enviou estes valores:', valoresSelecionados);
-
-    // É aqui que faremos a mágica de cruzar os dados com os 20 contatos depois!
-  }
-
 }
