@@ -37,7 +37,14 @@
         <div
             class="absolute p-1 top-full left-0 w-full mt-2.5 bg-slate-50 border border-gray-300 rounded-md shadow-lg z-50 max-h-60 overflow-auto">
 
-            @for (option of options; track option) {
+            <div class="mb-1 ">
+                <app-inputc type="text" placeholder="Pesquisar..." [value]="searchTerm" (input)="onSearch($event)"
+                    (click)="$event.stopPropagation()">
+                </app-inputc>
+
+            </div>
+
+            @for (option of filteredOptions; track option) {
             <button type="button" (click)="toggleOption(option)"
                 class="w-full flex items-center justify-between px-3 h-9 text-sm rounded-sm cursor-pointer text-gray-950 hover:bg-zinc-100 hover:text-blue-600 transition-colors"
                 [class.text-blue-600]="isSelected(option)" [class.text-gray-950]="!isSelected(option)"
@@ -48,6 +55,12 @@
                 <ng-icon name="heroCheck" class="text-xl"></ng-icon>
                 }
             </button>
+            }
+
+            @empty {
+            <div class="px-3 py-4 text-center text-sm text-gray-500">
+                Nenhum resultado para "<span class="font-semibold">{{ searchTerm }}</span>"
+            </div>
             }
 
         </div>

@@ -13,5 +13,7 @@ export class Inputc {
 
   @Input() placeholder: string = '';
 
+  @Input() value: string = '';
+
   @Input() id: string = `input-${Math.random().toString(36).substring(2, 9)}`;
 }
