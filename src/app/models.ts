@@ -4,4 +4,5 @@ export interface Contato {
     estado: string;
     cidade: string;
     planos: string[];
+    tags: string[];
 }

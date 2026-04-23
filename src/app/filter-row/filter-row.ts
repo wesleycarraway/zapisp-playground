@@ -20,7 +20,7 @@ export class FilterRow {
   // Avisa o pai sempre que os dados dessa linha mudarem
   @Output() ruleChange = new EventEmitter<any>();
 
-  fieldOptions: string[] = ['Estado', 'Cidade', 'Planos'];
+  fieldOptions: string[] = ['Estado', 'Cidade', 'Planos', 'Tags'];
   operatorOptions: string[] = ['É', 'Não é'];
   valueOptions: string[] = []; // A lista dinâmica específica DESSA linha
 
@@ -41,6 +41,16 @@ export class FilterRow {
       this.valueOptions = Object.values(this.db.cidadesPorEstado).flat();
     } else if (field === 'Planos') {
       this.valueOptions = this.db.planosDisponiveis;
+    } else if (field === 'Tags') {
+      this.valueOptions = this.db.tagsDisponiveis;
+    }
+
+    if (field === 'Tags' || field === 'Planos') {
+      this.operatorOptions = ['Contém qualquer', 'Contém todas', 'Não contém'];
+      this.selectedOperator = 'Contém qualquer'; // Valor padrão para listas
+    } else {
+      this.operatorOptions = ['É', 'Não é'];
+      this.selectedOperator = 'É'; // Valor padrão para texto simples
     }
 
     this.emitCurrentRule();

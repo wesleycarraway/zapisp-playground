@@ -50,7 +50,6 @@ export class MultiSelect {
     return this.selectedValues.length;
   }
 
-  // Gera o texto separado por vírgulas
   get displayText(): string {
     if (this.selectedCount === 0) return this.placeholder;
 

@@ -3,8 +3,8 @@
     <app-select placeholder="Selecionar" [options]="fieldOptions" (valueChanged)="onFieldChange($event)" width="160px">
     </app-select>
 
-    <app-select [autoSelectValue]="true" [options]="operatorOptions" (valueChanged)="onOperatorChange($event)"
-        width="90px">
+    <app-select [selectedValue]="selectedOperator" [autoSelectValue]="true" [options]="operatorOptions"
+        (valueChanged)="onOperatorChange($event)" width="160px">
     </app-select>
 
     <app-multi-select [selectedValues]="selectedValues" [options]="valueOptions"

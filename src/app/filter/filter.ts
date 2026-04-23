@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { heroChevronDownMicro, heroPlusMicro } from '@ng-icons/heroicons/micro';
-// IMPORTANTE: Importe o seu novo componente de linha aqui
 import { FilterRow } from '../filter-row/filter-row';
 import { Database } from '../database';
 import { Button } from '../button/button';
@@ -19,6 +18,7 @@ interface FilterRule {
   templateUrl: './filter.html',
 })
 export class Filter {
+  @Output() apply = new EventEmitter<number>();
 
   // A lista de filtros na tela. Já começa com 1 filtro em branco por padrão.
   activeRules: FilterRule[] = [
@@ -28,13 +28,11 @@ export class Filter {
   nextId: number = 2; // Usado para criar IDs únicos ao adicionar linhas
   isAndOperator: boolean = true;
 
-  // A VARIÁVEL QUE GUARDA OS RESULTADOS DA BUSCA
   filteredContacts: any[] = [];
 
   constructor(private db: Database) { }
 
   ngOnInit() {
-    // Quando a tela abre, mostra todos os contatos (nenhum filtro aplicado ainda)
     this.filteredContacts = this.db.listarContatos();
   }
 
@@ -54,8 +52,7 @@ export class Filter {
       // Se tem mais de um, remove normalmente
       this.activeRules = this.activeRules.filter(rule => rule.id !== ruleId);
     } else {
-      // O TRUQUE MÁGICO: Se for o último, nós o apagamos e colocamos um NOVO no lugar.
-      // Como o 'id' é novo (nextId++), o Angular destrói a linha velha e desenha uma linha virgem na tela!
+      // Se for o último, nós o apagamos e colocamos um NOVO no lugar.
       this.activeRules = [{ id: this.nextId++, data: null }];
     }
 
@@ -72,7 +69,6 @@ export class Filter {
     this.applyFilters();
   }
 
-  // ---> O MOTOR DE BUSCA <---
   applyFilters() {
     const allContacts = this.db.listarContatos();
 
@@ -90,36 +86,62 @@ export class Filter {
     // 2. Filtra os contatos cruzando com as regras
     this.filteredContacts = allContacts.filter(contato => {
 
-      // Avalia esse contato contra TODAS as linhas de filtro criadas
       const ruleResults = validRules.map(rule => {
-        const field = rule.data.field;
-        const operator = rule.data.operator;
-        const values = rule.data.values; // ex: ['RN', 'SP']
-
+        const { field, operator, values } = rule.data;
         let isMatch = false;
 
-        // Compara o banco de dados com a opção selecionada
         if (field === 'Estado') {
           isMatch = values.includes(contato.estado);
+          return operator === 'É' ? isMatch : !isMatch;
         } else if (field === 'Cidade') {
           isMatch = values.includes(contato.cidade);
-        } else if (field === 'Planos') {
-          // Se for array (Planos), checa se ele tem PELO MENOS UM dos planos selecionados
-          isMatch = values.some((v: string) => contato.planos.includes(v));
+          return operator === 'É' ? isMatch : !isMatch;
         }
 
-        // Aplica o "É" ou "Não é"
-        return operator === 'É' ? isMatch : !isMatch;
+        if (field === 'Tags' || field === 'Planos') {
+          const contatoArray = field === 'Tags' ? contato.tags : contato.planos;
+
+          if (operator === 'Contém qualquer') {
+            return values.some((v: string) => contatoArray.includes(v));
+          }
+
+          else if (operator === 'Contém todas') {
+            return values.every((v: string) => contatoArray.includes(v));
+          }
+
+          else if (operator === 'Não contém') {
+            return !values.some((v: string) => contatoArray.includes(v));
+          }
+        }
+
+        return false;
       });
 
       // 3. Aplica o Operador Global (E / OU)
       if (this.isAndOperator) {
-        // Se for "E", TODAS as regras precisam ter retornado true
         return ruleResults.every(result => result === true);
       } else {
-        // Se for "OU", PELO MENOS UMA regra precisa ter retornado true
         return ruleResults.some(result => result === true);
       }
     });
+  }
+
+  onClearClick() {
+    // 1. Reseta as variáveis do modal para o padrão de fábrica
+    this.activeRules = [{ id: this.nextId++, data: null }];
+
+    this.isAndOperator = true;
+
+    // 2. Roda a busca de novo (agora sem regras, vai retornar todos os 20 contatos)
+    this.applyFilters();
+  }
+
+  onApplyClick() {
+    // Conta apenas os filtros que estão totalmente preenchidos
+    const validRulesCount = this.activeRules.filter(rule =>
+      rule.data && rule.data.field && rule.data.operator && rule.data.values.length > 0
+    ).length;
+
+    this.apply.emit(validRulesCount);
   }
 }

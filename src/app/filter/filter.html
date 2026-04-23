@@ -16,7 +16,7 @@
                     @if (i === 0) {
                     <p class="text-sm text-gray-950 font-medium">Onde</p>
                     } @else {
-                    <button type="button" [disabled]="i > 1" (click)="toggleOperator()" class="flex flex-row items-center justify-center w-full gap-2 border text-sm font-semibold rounded-md px-3 h-9 transition-colors
+                    <button type="button" [disabled]="i > 1" (click)="toggleOperator()" class="flex flex-row items-center justify-center w-full gap-2 border text-sm font-semibold rounded-md pl-3 pr-2 h-9 transition-colors
                         {{ i === 1
                         ? 'border-gray-300 bg-slate-50 text-blue-600 cursor-pointer hover:bg-zinc-100 hover:border-gray-400'
                         : 'border-gray-300 bg-zinc-100 text-zinc-400 cursor-not-allowed' }}">
@@ -46,8 +46,9 @@
         </button>
     </div>
     <div class="flex flex-row justify-end gap-6 w-full border-t border-gray-200 p-6">
-        <button class="text-sm text-zinc-400 font-semibold hover:opacity-80 cursor-pointer">Limpar tudo</button>
-        <app-button variant="primary">
+        <button class="text-sm text-zinc-400 font-semibold hover:opacity-80 cursor-pointer"
+            (click)="onClearClick()">Limpar tudo</button>
+        <app-button variant="primary" (click)="onApplyClick()">
             Aplicar filtro
         </app-button>
     </div>

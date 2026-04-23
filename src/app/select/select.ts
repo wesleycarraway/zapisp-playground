@@ -24,7 +24,7 @@ export class Select {
 
   isOpen: boolean = false;
 
-  selectedValue: string = '';
+  @Input() selectedValue: string = '';
 
   ngOnInit() {
     if (this.autoSelectValue && this.options.length > 0) {

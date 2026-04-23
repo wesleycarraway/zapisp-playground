@@ -17,11 +17,13 @@ export class Database {
   };
   public readonly planosDisponiveis = ['Master', 'Ultra', 'Mega'];
 
+  public readonly tagsDisponiveis = ['Red', 'Green', 'Yellow', 'Blue', 'Purple'];
+
   private contatos: Contato[] = [];
 
   // Injetamos o PLATFORM_ID para saber se estamos no Servidor ou no Navegador
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
-    // 1. A TRAVA DE SEGURANÇA: Só roda se estiver no navegador
+    //TRAVA DE SEGURANÇA: Só roda se estiver no navegador
     if (isPlatformBrowser(this.platformId)) {
       this.carregarOuInicializarBanco();
     }
@@ -41,7 +43,6 @@ export class Database {
   }
 
   private salvarNoNavegador() {
-    // 2. Outra trava de segurança por precaução na hora de salvar
     if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.contatos));
     }
@@ -69,7 +70,8 @@ export class Database {
         nome: nomes[i],
         estado: estado,
         cidade: cidade,
-        planos: this.sortearPlanos()
+        planos: this.sortearPlanos(),
+        tags: this.sortearTags()
       });
     }
   }
@@ -79,5 +81,10 @@ export class Database {
     return [...this.planosDisponiveis]
       .sort(() => 0.5 - Math.random())
       .slice(0, qtde);
+  }
+
+  private sortearTags(): string[] {
+    const qtde = Math.floor(Math.random() * 3) + 1;
+    return [...this.tagsDisponiveis].sort(() => 0.5 - Math.random()).slice(0, qtde);
   }
 }
