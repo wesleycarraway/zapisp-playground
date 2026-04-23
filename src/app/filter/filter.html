@@ -1,18 +1,56 @@
-<div class="absolute top-full left-0 mt-2.5 z-50 p-6 bg-slate-50 border border-gray-200 rounded-lg shadow-md">
-    <div class="flex flex-row items-center justify-between">
-        <h4>Filtros</h4>
-        <p class="text-sm font-medium text-blue-600">Resultados</p>
+<div class="flex flex-col absolute top-full left-0 mt-2.5 z-50 bg-slate-50 border border-gray-200 rounded-lg shadow-lg">
+
+    <div class="flex flex-col gap-7 p-6">
+        <div class="flex flex-row items-center justify-between">
+            <h4>Filtros</h4>
+            <p class="text-sm font-medium text-blue-600">{{ filteredContacts.length }} resultados </p>
+        </div>
+
+        <div class="flex flex-col gap-3">
+            @for (rule of activeRules; track rule.id; let i = $index) {
+
+            <div class="flex flex-row items-center gap-5">
+
+                <div class="flex items-center justify-end w-18">
+
+                    @if (i === 0) {
+                    <p class="text-sm text-gray-950 font-medium">Onde</p>
+                    } @else {
+                    <button type="button" [disabled]="i > 1" (click)="toggleOperator()" class="flex flex-row items-center justify-center w-full gap-2 border text-sm font-semibold rounded-md pl-3 pr-2 h-9 transition-colors
+                        {{ i === 1
+                        ? 'border-gray-300 bg-slate-50 text-blue-600 cursor-pointer hover:bg-zinc-100 hover:border-gray-400'
+                        : 'border-gray-300 bg-zinc-100 text-zinc-400 cursor-not-allowed' }}">
+
+                        <span>{{ isAndOperator ? 'E' : 'OU' }}</span>
+
+                        @if (i === 1) {
+                        <ng-icon name="heroChevronDownMicro" size="1rem"></ng-icon>
+                        }
+                    </button>
+                    }
+
+                </div>
+
+                <app-filter-row (removeRow)="removeRule(rule.id)" (ruleChange)="updateRuleData(rule.id, $event)">
+                </app-filter-row>
+
+            </div>
+
+            }
+        </div>
+
+        <button type="button" (click)="addNewRule()" class="flex flex-row self-start items-center justify-center gap-2 text-sm font-semibold rounded-md px-3 h-9 border border-gray-300
+             text-zinc-500 bg-slate-50 hover:bg-slate-100 hover:border-gray-400 cursor-pointer">
+            <ng-icon name="heroPlusMicro" class="text-base"></ng-icon>
+            Adicionar filtro
+        </button>
+    </div>
+    <div class="flex flex-row justify-end gap-6 w-full border-t border-gray-200 p-6">
+        <button class="text-sm text-zinc-400 font-semibold hover:opacity-80 cursor-pointer"
+            (click)="onClearClick()">Limpar tudo</button>
+        <app-button variant="primary" (click)="onApplyClick()">
+            Aplicar filtro
+        </app-button>
     </div>
 
-    <ul>
-        <li>filtro 1</li>
-        <li>filtro 2</li>
-    </ul>
-
-    <app-inputc placeholder="you@example.com">
-    </app-inputc>
-
-    <br>
-
-    <app-select label="Teste" [options]="options"></app-select>
 </div>

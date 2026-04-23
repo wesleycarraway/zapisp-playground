@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { Navbar } from './navbar/navbar';
+import { Database } from './database';
 
 @Component({
   selector: 'app-root',
@@ -10,4 +11,9 @@ import { Navbar } from './navbar/navbar';
 })
 export class App {
   protected readonly title = signal('zapisp-playground');
+
+  constructor(private db: Database) {
+    const todosOsContatos = this.db.listarContatos();
+    console.table(todosOsContatos);
+  }
 }

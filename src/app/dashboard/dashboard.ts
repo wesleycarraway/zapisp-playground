@@ -17,7 +17,14 @@ import { Filter } from '../filter/filter';
 export class Dashboard {
   isFilterModalOpen: boolean = false;
 
+  appliedFiltersCount: number = 0;
+
   toggleFilterModal() {
     this.isFilterModalOpen = !this.isFilterModalOpen;
+  }
+
+  onFiltersApplied(count: number) {
+    this.appliedFiltersCount = count;
+    this.isFilterModalOpen = false;
   }
 }

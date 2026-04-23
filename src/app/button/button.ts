@@ -21,11 +21,11 @@ export class Button {
     }
 
     if (this.variant === 'primary') {
-      return base + ' bg-blue-600 text-slate-50 cursor-pointer';
+      return base + ' bg-blue-600 hover:bg-blue-500 text-slate-50 cursor-pointer';
     }
 
     if (this.variant === 'secondary') {
-      return base + ' bg-slate-50 border border-gray-300  text-blue-600 hover:bg-slate-100 cursor-pointer';
+      return base + ' bg-slate-50 border border-gray-300  text-blue-600 hover:bg-slate-100 hover:border-gray-400 cursor-pointer';
     }
 
     return base;

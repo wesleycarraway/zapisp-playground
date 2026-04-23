@@ -23,15 +23,19 @@
 
             Filtros
 
-            <div
+            <span
                 class="flex flex-row items-center justify-center text-xs text-(--color-icon-primary) min-w-5 py-0.5 px-1.5 rounded-full bg-zinc-100">
-                2
-            </div>
+                {{ appliedFiltersCount }}
+            </span>
         </app-button>
 
         @if (isFilterModalOpen) {
-        <app-filter></app-filter>
+        <div class="fixed inset-0 z-40 cursor-default" (click)="isFilterModalOpen = false">
+        </div>
         }
+
+        <app-filter [class.hidden]="!isFilterModalOpen" (apply)="onFiltersApplied($event)">
+        </app-filter>
     </div>
 
 </div>
