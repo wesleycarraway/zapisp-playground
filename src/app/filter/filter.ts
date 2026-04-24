@@ -101,15 +101,15 @@ export class Filter {
         if (field === 'Tags' || field === 'Planos') {
           const contatoArray = field === 'Tags' ? contato.tags : contato.planos;
 
-          if (operator === 'Contém qualquer') {
+          if (operator === 'É qualquer um de') {
             return values.some((v: string) => contatoArray.includes(v));
           }
 
-          else if (operator === 'Contém todas') {
+          else if (operator === 'Inclui ambos') {
             return values.every((v: string) => contatoArray.includes(v));
           }
 
-          else if (operator === 'Não contém') {
+          else if (operator === 'Não inclui') {
             return !values.some((v: string) => contatoArray.includes(v));
           }
         }

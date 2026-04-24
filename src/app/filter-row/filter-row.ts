@@ -46,8 +46,8 @@ export class FilterRow {
     }
 
     if (field === 'Tags' || field === 'Planos') {
-      this.operatorOptions = ['Contém qualquer', 'Contém todas', 'Não contém'];
-      this.selectedOperator = 'Contém qualquer'; // Valor padrão para listas
+      this.operatorOptions = ['É qualquer um de', 'Inclui ambos', 'Não inclui'];
+      this.selectedOperator = 'É qualquer um de'; // Valor padrão para listas
     } else {
       this.operatorOptions = ['É', 'Não é'];
       this.selectedOperator = 'É'; // Valor padrão para texto simples
