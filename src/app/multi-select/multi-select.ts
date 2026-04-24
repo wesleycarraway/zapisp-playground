@@ -17,6 +17,7 @@ export class MultiSelect {
   @Input() placeholder: string = 'Selecionar';
   @Input() options: string[] = [];
   @Input() width: string = '100%';
+  @Input() operator: string = '';
 
   @Output() valuesChanged = new EventEmitter<string[]>();
 
@@ -75,6 +76,12 @@ export class MultiSelect {
   get displayText(): string {
     if (this.selectedCount === 0) return this.placeholder;
 
-    return this.selectedValues.join(', ');
+    if (this.selectedCount === 1) return this.selectedValues[0];
+
+    const valores = [...this.selectedValues];
+    const ultimoValor = valores.pop();
+    const palavraDeUniao = this.operator === 'Inclui ambos' ? 'e' : 'ou';
+
+    return `${valores.join(', ')} ${palavraDeUniao} ${ultimoValor}`;
   }
 }
