@@ -14,14 +14,14 @@ export class Button {
 
   get classes() {
 
-    let base = 'flex flex-row items-center justify-center gap-2 text-sm font-semibold rounded-md px-3 h-9';
+    let base = 'flex flex-row items-center justify-center gap-2 text-sm font-medium rounded-lg px-2.5 h-8';
 
     if (this.disabled) {
       return base + ' bg-zinc-100 text-zinc-400 cursor-not-allowed';
     }
 
     if (this.variant === 'primary') {
-      return base + ' bg-blue-600 hover:bg-blue-500 text-slate-50 cursor-pointer';
+      return base + ' bg-slate-950 hover:bg-slate-800 text-slate-50 cursor-pointer';
     }
 
     if (this.variant === 'secondary') {
