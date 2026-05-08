@@ -1,4 +1,4 @@
-<div class="flex flex-row items-center justify-center gap-2.5 p-2.5 bg-zinc-100 rounded-md">
+<div class="flex flex-row items-center justify-center gap-2.5 p-2.5 bg-zinc-100 rounded-2xl">
 
     <app-select placeholder="Selecionar" [options]="fieldOptions" (valueChanged)="onFieldChange($event)" width="160px">
     </app-select>
@@ -12,7 +12,7 @@
     </app-multi-select>
 
     <button (click)="removeRow.emit()"
-        class="flex items-center justify-center size-9 rounded-full hover:bg-zinc-200 hover:text-red-400 cursor-pointer">
-        <ng-icon name="heroTrashMini" class="text-xl text-gray-950"></ng-icon>
+        class="flex items-center justify-center size-8 rounded-full hover:bg-zinc-200 hover:text-red-400 cursor-pointer">
+        <ng-icon name="heroTrashMini" class="text-base text-gray-950"></ng-icon>
     </button>
 </div>
